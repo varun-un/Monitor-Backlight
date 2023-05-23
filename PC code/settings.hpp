@@ -1,0 +1,2 @@
+#define SC_WIDTH 1920
+#define SC_HEIGHT 1080
