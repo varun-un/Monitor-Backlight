@@ -1,22 +1,24 @@
 #include <Arduino.h>
+#include "FastLED.h"
 
-// put function declarations here:
-int myFunction(int, int);
+#define NUM_LEDS 54
+#define DATA_PIN 9
+
+CRGB leds[NUM_LEDS];
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-  Serial.begin(9600);
+  
+    Serial.begin(9600);
+    FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 
 }
+
+int i = 0;
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Serial.println("Hello World");
-    delay(1000);
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    leds[i % 54].r = 255;
+    FastLED.show();
+    delay(100);
+    i++;
 }
