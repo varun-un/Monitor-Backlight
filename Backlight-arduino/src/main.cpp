@@ -14,11 +14,18 @@ void setup() {
 }
 
 int i = 0;
+int j = 0;
 
 void loop() {
+    
+    if (Serial.available() > 0) {
+        leds[j].b = 255;
+        j++;
+    }
 
     leds[i % 54].r = 255;
     FastLED.show();
     delay(100);
     i++;
+
 }

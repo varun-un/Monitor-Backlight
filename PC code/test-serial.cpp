@@ -1,36 +1,30 @@
-#include "settings.hpp"
-#include <windows.h>
-#include <stdio.h>
+#include <iostream>
+using namespace std;
+#include <string>
+#include <stdlib.h>
+#include "SerialPort.hpp"
 
-// Open serial port
-HANDLE serialHandle;
+// g++ test-serial.cpp -lgdi32 -o serial.exe
+
+char output[MAX_DATA_LENGTH];
+char incomingData[MAX_DATA_LENGTH];
+
+// change the name of the port with the port name of your computer
+// must remember that the backslashes are essential so do not remove them
+char port[] = "\\\\.\\COM6";
 
 int main(int argc, char **argv) {
 
-    serialHandle = CreateFileA("\\\\.\\COM1", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-    // Do some basic settings
-    DCB serialParams = { 0 };
-    serialParams.DCBlength = sizeof(serialParams);
-
-    GetCommState(serialHandle, &serialParams);
-    serialParams.BaudRate = 9600;
-    serialParams.ByteSize = 8;
-    serialParams.StopBits = 0;
-    serialParams.Parity = 1;
-    SetCommState(serialHandle, &serialParams);
-
-    // Set timeouts
-    COMMTIMEOUTS timeout = { 0 };
-    timeout.ReadIntervalTimeout = 50;
-    timeout.ReadTotalTimeoutConstant = 50;
-    timeout.ReadTotalTimeoutMultiplier = 50;
-    timeout.WriteTotalTimeoutConstant = 50;
-    timeout.WriteTotalTimeoutMultiplier = 10;
-
-    SetCommTimeouts(serialHandle, &timeout);
-
-    // Close Serial
-    CloseHandle(serialHandle);
-
+	SerialPort arduino(port);
+	if(arduino.isConnected()){
+		cout<<"Connection made"<<endl<<endl;
+	}
+	else{
+		cout<<"Error in port name"<<endl<<endl;
+	}
+	if (arduino.isConnected()){
+		arduino.writeSerialPort("charArray", MAX_DATA_LENGTH);
+		arduino.readSerialPort(output, MAX_DATA_LENGTH);
+	}
+	return 0;
 }
