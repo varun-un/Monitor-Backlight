@@ -11,21 +11,25 @@ void setup() {
     Serial.begin(9600);
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 
+    for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i % 54].r = 255;
+        FastLED.show();
+        delay(100);
+    }
+
 }
 
-int i = 0;
 int j = 0;
 
 void loop() {
     
     if (Serial.available() > 0) {
+        Serial.read();
         leds[j].b = 255;
         j++;
     }
 
-    leds[i % 54].r = 255;
     FastLED.show();
-    delay(100);
-    i++;
+
 
 }

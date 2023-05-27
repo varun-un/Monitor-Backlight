@@ -22,9 +22,11 @@ int main(int argc, char **argv) {
 	else{
 		cout<<"Error in port name"<<endl<<endl;
 	}
-	if (arduino.isConnected()){
-		arduino.writeSerialPort("charArray", MAX_DATA_LENGTH);
-		arduino.readSerialPort(output, MAX_DATA_LENGTH);
+	while (arduino.isConnected()) {
+		arduino.writeSerialPort("c", 1);
+        cout<<"sent char"<<endl;
+		// arduino.readSerialPort(output, MAX_DATA_LENGTH);
+        Sleep(5000);
 	}
 	return 0;
 }
