@@ -70,6 +70,7 @@ int main(int argc, char **argv) {
         for (int i = 0; i < num_samples; i++) {
 
             int pix = pixels[i];
+            printf("Pixel %d: %d, %d, %d\n", pix, pPixels[pix].rgbRed, pPixels[pix].rgbGreen, pPixels[pix].rgbBlue);
             arduino.writeSerialPort(pPixels[pix].rgbRed, 1);
             arduino.writeSerialPort(pPixels[pix].rgbGreen, 1);
             arduino.writeSerialPort(pPixels[pix].rgbBlue, 1);
