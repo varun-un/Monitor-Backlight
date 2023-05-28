@@ -36,7 +36,7 @@ SerialPort::SerialPort(const char *portName)
             dcbSerialParameters.ByteSize = 8;
             dcbSerialParameters.StopBits = ONESTOPBIT;
             dcbSerialParameters.Parity = NOPARITY;
-            dcbSerialParameters.fDtrControl = DTR_CONTROL_ENABLE;
+            dcbSerialParameters.fDtrControl = DTR_CONTROL_DISABLE;
 
             if (!SetCommState(handler, &dcbSerialParameters))
             {

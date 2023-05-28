@@ -9,7 +9,7 @@ using namespace std;
 
 // change the name of the port with the port name of your computer
 // must remember that the backslashes are essential so do not remove them
-char port[] = "\\\\.\\COM6";
+char port[] = COM_PORT;
 
 int pixels[] = {
     1863, 1692, 1521, 1350, 1179, 1008, 837, 666, 495, 324, 153, 1,
@@ -25,8 +25,10 @@ int pixels[] = {
 
 int num_samples = (int)(sizeof(pixels) / sizeof(pixels[0]));
 
-
 int main(int argc, char **argv) {
+
+    printf("num_samples: %d\n", num_samples);
+
 
     HINSTANCE _hGDI = LoadLibraryA("gdi32.dll");
 
@@ -36,7 +38,6 @@ int main(int argc, char **argv) {
     HBITMAP hCaptureBitmap = CreateCompatibleBitmap(hDesktopDC, SC_WIDTH, SC_HEIGHT);
     SelectObject(hCaptureDC, hCaptureBitmap);  
 
-    // Create a BITMAPINFO specifying the format you want the pixels in.
     // To keep this simple, we'll use 32-bits per pixel (the high byte isn't
     // used).
     BITMAPINFO bmi = {0};
@@ -77,15 +78,18 @@ int main(int argc, char **argv) {
         // inner loop for each pixel each frame
         for (int i = 0; i < num_samples; i++) {
 
-            int pix = pixels[i];
+            RGBQUAD pix = pPixels[pixels[i]];
             // printf("Pixel %d: %d, %d, %d\n", pix, pPixels[pix].rgbRed, pPixels[pix].rgbGreen, pPixels[pix].rgbBlue);
-            arduino.writeSerialPort(pPixels[pix].rgbRed, 1);
-            arduino.writeSerialPort(pPixels[pix].rgbGreen, 1);
-            arduino.writeSerialPort(pPixels[pix].rgbBlue, 1);
+            arduino.writeSerialPort(pix.rgbRed, 1);
+            arduino.writeSerialPort(pix.rgbGreen, 1);
+            arduino.writeSerialPort(pix.rgbBlue, 1);
 
+            // if (i > 28) {
+            //     Sleep(1);
+            // }
         }
 
-        Sleep(500);
+        Sleep(5);
 	}
 
 

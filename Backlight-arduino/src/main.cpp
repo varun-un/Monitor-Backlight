@@ -30,7 +30,7 @@ void setup() {
 
 void loop() {
     
-    if (Serial.available() > 0) {
+    while (Serial.available() > 0) {
         *(led_pointers[j]) = Serial.read();
         j = (j + 1) % 162;                                   //num_colors
     }
