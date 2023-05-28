@@ -4,7 +4,7 @@ using namespace std;
 #include <stdlib.h>
 #include "SerialPort.hpp"
 
-// g++ test-serial.cpp -lgdi32 -o serial.exe
+// g++ test-serial.cpp SerialPort.cpp -lgdi32 -o serial.exe
 
 char output[MAX_DATA_LENGTH];
 char incomingData[MAX_DATA_LENGTH];
@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 	while (arduino.isConnected()) {
 		arduino.writeSerialPort("c", 1);
         cout<<"sent char"<<endl;
-		// arduino.readSerialPort(output, MAX_DATA_LENGTH);
+		arduino.readSerialPort(output, MAX_DATA_LENGTH);
         Sleep(5000);
 	}
 	return 0;

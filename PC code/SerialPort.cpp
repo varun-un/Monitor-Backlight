@@ -94,11 +94,25 @@ int SerialPort::readSerialPort(const char *buffer, unsigned int buf_size)
 
 // Sending provided buffer to serial port;
 // returns true if succeed, false if not
-bool SerialPort::writeSerialPort(const char *buffer, unsigned int buf_size)
+bool SerialPort::writeSerialPort(void *buffer, unsigned int buf_size)
 {
     DWORD bytesSend;
 
-    if (!WriteFile(this->handler, (void*) buffer, buf_size, &bytesSend, 0))
+    if (!WriteFile(this->handler, buffer, buf_size, &bytesSend, 0))
+    {
+        ClearCommError(this->handler, &this->errors, &this->status);
+        return false;
+    }
+    
+    return true;
+}
+
+// Overloaded function for int input
+bool SerialPort::writeSerialPort(int data, unsigned int buf_size)
+{
+    DWORD bytesSend;
+
+    if (!WriteFile(this->handler, (void *)(&data), buf_size, &bytesSend, 0))
     {
         ClearCommError(this->handler, &this->errors, &this->status);
         return false;
