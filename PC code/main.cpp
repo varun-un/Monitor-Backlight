@@ -12,7 +12,15 @@ using namespace std;
 char port[] = "\\\\.\\COM6";
 
 int pixels[] = {
-    3840, 4000, 4382, 192500
+    1863, 1692, 1521, 1350, 1179, 1008, 837, 666, 495, 324, 153, 1,
+    376320, 716160, 1056000, 1395840, 1733760, 2071680,
+    2071836, 2072012, 2072188, 2072364, 2072540, 2072716, 2072892, 2073068, 2073244, 2073420, 2073599,
+    1852799, 1520639, 1188479, 856319, 524159, 191999,
+    1787, 1615, 1444, 1272,
+    296915, 629075, 961235, 1293395, 1625555, 1957715,
+    2072777, 2072601, 2072425,
+    1847667, 1507827, 1167987, 828147, 488307, 148467
+
 };
 
 int num_samples = (int)(sizeof(pixels) / sizeof(pixels[0]));
@@ -70,7 +78,7 @@ int main(int argc, char **argv) {
         for (int i = 0; i < num_samples; i++) {
 
             int pix = pixels[i];
-            printf("Pixel %d: %d, %d, %d\n", pix, pPixels[pix].rgbRed, pPixels[pix].rgbGreen, pPixels[pix].rgbBlue);
+            // printf("Pixel %d: %d, %d, %d\n", pix, pPixels[pix].rgbRed, pPixels[pix].rgbGreen, pPixels[pix].rgbBlue);
             arduino.writeSerialPort(pPixels[pix].rgbRed, 1);
             arduino.writeSerialPort(pPixels[pix].rgbGreen, 1);
             arduino.writeSerialPort(pPixels[pix].rgbBlue, 1);

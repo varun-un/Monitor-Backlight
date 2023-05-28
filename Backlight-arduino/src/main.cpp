@@ -6,9 +6,10 @@
 
 CRGB leds[NUM_LEDS];
 int j = 0;
+int num_colors = NUM_LEDS * 3;                                              
 
 //create pointer array of leds and values to change
-uint8_t *led_pointers[12];
+uint8_t *led_pointers[162];                                         //num_colors
 
 void setup() {
   
@@ -16,7 +17,7 @@ void setup() {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 
     //set up pointer array
-    for (int i = 0; i < 12; i++) {                                  //replace 15 with number of leds times 3
+    for (int i = 0; i < 162; i++) {                                  //num_colors
 
         if (i % 3 == 0)
             led_pointers[i] = &(leds[i / 3].r);
@@ -31,7 +32,7 @@ void loop() {
     
     if (Serial.available() > 0) {
         *(led_pointers[j]) = Serial.read();
-        j = (j + 1) % 12;                                   //replace 15 with number of leds times 3
+        j = (j + 1) % 162;                                   //num_colors
     }
 
     FastLED.show();
